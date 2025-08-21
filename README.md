@@ -1,9 +1,5 @@
 
 ---
-
-### **2. Frontend – `2fa-app` README**
-
-```markdown
 # 2FA Overlay App
 
 [![GitHub](https://img.shields.io/badge/GitHub-Edarth002-181717?logo=github)](https://github.com/Edarth002)
