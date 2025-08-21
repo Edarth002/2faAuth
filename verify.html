@@ -43,7 +43,7 @@
             Enter the 6-digit code we sent to your email.
           </p>
 
-          <form class="form" onsubmit="handleVerify(event)">
+          <form class="form" id="verifyForm" onsubmit="handleVerify(event)">
             <div class="verification-input">
               <input type="text" maxlength="1" class="verification-digit" />
               <input type="text" maxlength="1" class="verification-digit" />
@@ -54,6 +54,8 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Verify</button>
+            <div id="verifyError" class="error-message"></div>
+            <div id="verifySuccess" class="success-message"></div>
           </form>
 
           <div class="mt-4">

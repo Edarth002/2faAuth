@@ -27,7 +27,7 @@
             Join MinimalApp and experience clean, modern design.
           </p>
 
-          <form class="form" onsubmit="handleRegister(event)">
+          <form class="form" id="registerForm" onsubmit="handleRegister(event)">
             <div class="form-group">
               <label for="name" class="form-label">Full Name</label>
               <input
@@ -77,6 +77,8 @@
             <button type="submit" class="btn btn-primary">
               Create Account
             </button>
+            <div id="registerError" class="error-message"></div>
+            <div id="registerSuccess" class="success-message"></div>
           </form>
 
           <div class="text-center mt-4">

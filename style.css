@@ -364,3 +364,15 @@ p {
 .mt-4 {
   margin-top: 2rem;
 }
+
+.success-message {
+  color: green;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}
+
+.error-message {
+  color: red;
+  margin-top: 8px;
+  font-size: 0.9rem;
+}

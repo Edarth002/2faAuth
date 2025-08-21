@@ -27,7 +27,7 @@
             Welcome back! Please sign in to your account.
           </p>
 
-          <form class="form" onsubmit="handleLogin(event)">
+          <form class="form" id="loginForm" onsubmit="handleLogin(event)">
             <div class="form-group">
               <label for="email" class="form-label">Email Address</label>
               <input
@@ -51,6 +51,8 @@
             </div>
 
             <button type="submit" class="btn btn-primary">Sign In</button>
+            <div id="loginError" class="error-message"></div>
+            <div id="loginSuccess" class="success-message"></div>
           </form>
 
           <div class="text-center mt-4">
