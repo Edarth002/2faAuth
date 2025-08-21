@@ -2,42 +2,101 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>App Homepage</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MinimalApp - Clean & Modern</title>
     <link rel="stylesheet" href="./style.css" />
-    <script src="app.js" defer></script>
   </head>
   <body>
-    <header>
-      <h1>Auth Overlay Application</h1>
+    <header class="header">
+      <div class="header-content">
+        <a href="index.html" class="logo">MinimalApp</a>
+        <nav class="nav">
+          <a href="index.html" class="active">Home</a>
+          <a href="login.html">Login</a>
+          <a href="register.html">Register</a>
+          <a href="logs.html">Logs</a>
+        </nav>
+      </div>
     </header>
-    <main>
-      <h2>About</h2>
-      <p>
-        This is a simple black-and-white authentication app with registration,
-        login, and OTP verification. It also logs activity for tracking.
-      </p>
 
-      <h2>Overlay Snippet</h2>
-      <p>
-        Copy and paste this snippet into any app to embed the overlay
-        (placeholder):
-      </p>
-      <pre class="code-snippet">
-&lt;script src="overlay.js"&gt;&lt;/script&gt;
-&lt;div id="auth-overlay"&gt;&lt;/div&gt;
-    </pre
-      >
+    <main class="mainhome">
+      <div class="container text-center fade-in">
+        <h1>Welcome to MinimalApp</h1>
+        <p class="mb-4">
+          A clean, modern web application built with pure HTML and CSS.
+          Experience the power of minimalist design with elegant typography and
+          smooth interactions.
+        </p>
 
-      <h2>Navigation</h2>
-      <ul>
-        <li><a href="./register.html">Register</a></li>
-        <li><a href="./login.html">Login</a></li>
-        <li><a href="./verify.html">Verify</a></li>
-        <li><a href="./logs.html">Logs</a></li>
-      </ul>
+        <div class="mb-4">
+          <a href="register.html" class="btn btn-primary">Get Started</a>
+          <a href="login.html" class="btn btn-secondary mt-2">Sign In</a>
+        </div>
+
+        <div class="code-overlay">
+          <pre><code>// Example API Integration
+const response = await fetch('/api/users');
+const data = await response.json();
+
+// Clean, minimal code structure
+export default function App() {
+  return (
+    &lt;div className="minimal-app"&gt;
+      &lt;h1&gt;Hello, World!&lt;/h1&gt;
+    &lt;/div&gt;
+  );
+}</code></pre>
+        </div>
+
+        <div class="mt-4">
+          <h3>Key Features</h3>
+          <div
+            style="
+              display: flex;
+              justify-items: space-between;
+              margin-right: auto;
+              margin-left: auto;
+              margin-top: 2rem;
+              width: 100%;
+            "
+          >
+            <div class="card">
+              <h4>Clean Design</h4>
+              <p>
+                Minimalist black and white aesthetic with elegant typography
+                using Inter and Poppins fonts.
+              </p>
+            </div>
+            <div class="card">
+              <h4>Responsive Layout</h4>
+              <p>
+                Fully responsive design that works seamlessly across all devices
+                and screen sizes.
+              </p>
+            </div>
+            <div class="card">
+              <h4>Smooth Transitions</h4>
+              <p>
+                Carefully crafted CSS animations and transitions for a polished
+                user experience.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </main>
-    <footer>
-      <p>&copy; 2025 Auth Overlay App</p>
+
+    <footer class="footer">
+      <div class="footer-content">
+        <p>
+          &copy; 2024 <span class="brand">MinimalApp</span>. All rights
+          reserved.
+        </p>
+
+        <div class="footer-note">
+          <p>Built with ❤️ using pure HTML & CSS</p>
+        </div>
+      </div>
     </footer>
   </body>
 </html>
