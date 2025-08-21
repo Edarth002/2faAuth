@@ -1,25 +1,14 @@
 const API_BASE = "http://localhost:3000/api/auth"; // change to your backend URL
 
-// Error / Success containers
-const registerError = document.getElementById("registerError");
-const registerSuccess = document.getElementById("registerSuccess");
-const loginError = document.getElementById("loginError");
-const loginSuccess = document.getElementById("loginSuccess");
-const verifyError = document.getElementById("verifyError");
-const verifySuccess = document.getElementById("verifySuccess");
-
 async function handleRegister(event) {
   event.preventDefault();
-  registerError.textContent = "";
-  registerSuccess.textContent = "";
-
   const name = document.getElementById("name").value;
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirmPassword").value;
 
   if (password !== confirmPassword) {
-    registerError.textContent = "Passwords do not match!";
+    alert("Passwords do not match!");
     return;
   }
 
@@ -33,22 +22,19 @@ async function handleRegister(event) {
 
     if (res.ok) {
       logAction("REGISTER", `User: ${email}`);
-      registerSuccess.textContent = "Registration successful! Redirecting...";
-      setTimeout(() => (window.location.href = "login.html"), 1500);
+      alert(data.message);
+      window.location.href = "login.html";
     } else {
-      registerError.textContent = data.message || "Registration failed";
+      alert(data.message || "Registration failed");
     }
   } catch (err) {
     console.error(err);
-    registerError.textContent = "Server error";
+    alert("Server error");
   }
 }
 
 async function handleLogin(event) {
   event.preventDefault();
-  loginError.textContent = "";
-  loginSuccess.textContent = "";
-
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
 
@@ -62,44 +48,44 @@ async function handleLogin(event) {
 
     if (res.ok) {
       logAction("LOGIN", `User: ${email}`);
-      localStorage.setItem("userId", data.userId);
+      localStorage.setItem("userId", data.userId); // save for OTP verify
       localStorage.setItem("email", email);
-      loginSuccess.textContent = "OTP sent! Redirecting to verification...";
-      setTimeout(() => (window.location.href = "verify.html"), 1500);
+      alert("OTP sent to your email");
+      window.location.href = "verify.html";
     } else {
-      loginError.textContent = data.message || "Login failed";
+      alert(data.message || "Login failed");
     }
   } catch (err) {
     console.error(err);
-    loginError.textContent = "Server error";
+    alert("Server error");
   }
 }
 
-// OTP Inputs Handling
 const inputs = document.querySelectorAll(".verification-digit");
+
 inputs.forEach((input, idx) => {
   input.addEventListener("input", () => {
-    if (input.value && idx < inputs.length - 1) inputs[idx + 1].focus();
+    if (input.value && idx < inputs.length - 1) {
+      inputs[idx + 1].focus();
+    }
   });
+
   input.addEventListener("keydown", (e) => {
-    if (e.key === "Backspace" && !input.value && idx > 0)
+    if (e.key === "Backspace" && !input.value && idx > 0) {
       inputs[idx - 1].focus();
+    }
   });
 });
 
 async function handleVerify(event) {
   event.preventDefault();
-  verifyError.textContent = "";
-  verifySuccess.textContent = "";
-
   const otp = Array.from(inputs)
     .map((i) => i.value)
     .join("");
   const userId = localStorage.getItem("userId");
 
   if (otp.length !== 6) {
-    verifyError.textContent = "Please enter all 6 digits.";
-    return;
+    return alert("Please enter all 6 digits.");
   }
 
   try {
@@ -112,30 +98,36 @@ async function handleVerify(event) {
     const data = await res.json();
     if (res.ok && data.token) {
       localStorage.setItem("authToken", data.token);
+
+      // ✅ fetch user email (stored from login step)
       const email = localStorage.getItem("email");
+
+      // ✅ log with email instead of just userId
       logAction("VERIFY", `User: ${email || "UserID " + userId}`);
-      verifySuccess.textContent = "Verification successful! Redirecting...";
-      setTimeout(() => (window.location.href = "logs.html"), 1500);
+
+      alert("Verification successful!");
+      window.location.href = "logs.html";
     } else {
-      verifyError.textContent = data.message || "Verification failed.";
+      alert(data.message || "Verification failed.");
     }
   } catch (err) {
     console.error(err);
-    verifyError.textContent = "Server error";
+    alert("Server error");
   }
 }
 
 function resendCode() {
-  verifySuccess.textContent = "Verification code resent (demo).";
+  alert("Verification code resent (demo).");
+  // Optionally call API: fetch(`${API_BASE}/resend-otp`, { ... })
 }
 
 // Autofocus first digit
 document.addEventListener("DOMContentLoaded", () => inputs[0].focus());
 
-// Logging user actions
 function logAction(action, details) {
   try {
-    const userId = localStorage.getItem("userId");
+    const userId = localStorage.getItem("userId"); // get from storage
+
     fetch(`${API_BASE}/logs`, {
       method: "POST",
       headers: {
@@ -154,7 +146,6 @@ function logAction(action, details) {
   }
 }
 
-// Fetch logs
 async function fetchLogs() {
   try {
     const res = await fetch(`${API_BASE}/logs`, {
@@ -170,12 +161,12 @@ async function fetchLogs() {
       data.forEach((log) => {
         const row = document.createElement("tr");
         row.innerHTML = `
-          <td>${new Date(log.timestamp).toLocaleString()}</td>
-          <td>${log.action}</td>
-          <td>${log.user}</td>
-          <td>${log.status}</td>
-          <td>${log.ip || "-"}</td>
-        `;
+                <td>${new Date(log.timestamp).toLocaleString()}</td>
+                <td>${log.action}</td>
+                <td>${log.user}</td>
+                <td>${log.status}</td>
+                <td>${log.ip || "-"}</td>
+              `;
         tbody.appendChild(row);
       });
     } else {
@@ -183,6 +174,7 @@ async function fetchLogs() {
     }
   } catch (err) {
     console.error(err);
+    alert("Failed to load logs");
   }
 }
 
