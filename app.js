@@ -114,7 +114,7 @@ async function handleVerify(event) {
       localStorage.setItem("authToken", data.token);
       const email = localStorage.getItem("email");
       logAction("VERIFY", `User: ${email || "UserID " + userId}`);
-      verifySuccess.textContent = "Verification successful! Redirecting...";
+      verifySuccess.textContent = "Verification successful!...";
       setTimeout(() => (window.location.href = "logs.html"), 1500);
     } else {
       verifyError.textContent = data.message || "Verification failed.";
