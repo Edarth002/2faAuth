@@ -113,6 +113,11 @@ async function handleVerify(event) {
     if (res.ok && data.token) {
       localStorage.setItem("authToken", data.token);
 
+      const email = localStorage.getItem("email");
+
+      // ✅ log with email instead of just userId
+      logAction("VERIFY", `User: ${email || "UserID " + userId}`);
+
       // 🔑 Send token back to the embedding host
       window.parent.postMessage(
         { type: "AUTH_SUCCESS", token: data.token },
