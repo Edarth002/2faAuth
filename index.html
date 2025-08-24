@@ -33,20 +33,66 @@
           <a href="login.html" class="btn btn-secondary mt-2">Sign In</a>
         </div>
 
-        <div class="code-overlay">
-          <pre><code>// Example API Integration
-const response = await fetch('/api/users');
-const data = await response.json();
+        <!-- Section for code instructions -->
+        <!-- Step 1: Add a login button -->
+        <section>
+          <h3>Step 1: Add a registration button</h3>
+          <div class="code-overlay">
+            <pre><code>&lt;button id="signUp"&gt;Signin with 2FA&lt;/button&gt;</code></pre>
+          </div>
+        </section>
 
-// Clean, minimal code structure
-export default function App() {
-  return (
-    &lt;div className="minimal-app"&gt;
-      &lt;h1&gt;Hello, World!&lt;/h1&gt;
-    &lt;/div&gt;
-  );
-}</code></pre>
-        </div>
+        <!-- Step 2: Include the Auth Overlay script -->
+        <section>
+          <h3>Step 2: Include the Auth Overlay script</h3>
+          <div class="code-overlay">
+            <pre><code>&lt;script&gt;
+(function(){
+  const iframe = document.createElement("iframe");
+  iframe.src = "http://127.0.0.1:5500/register.html";
+  iframe.style = "position:fixed;top:0;left:0;width:100%;height:100%;border:none;z-index:99999;display:none";
+  document.body.appendChild(iframe);
+
+  window.AuthOverlay = {
+    open: () =&gt; iframe.style.display = "block",
+    close: () =&gt; iframe.style.display = "none",
+    onSuccess: (callback) =&gt; {
+      window.addEventListener("message", (e) =&gt; {
+        if (e.data.type === "AUTH_SUCCESS") {
+          callback(e.data.token);
+          iframe.style.display = "none";
+        }
+      });
+    }
+  };
+})();
+&lt;/script&gt;</code></pre>
+          </div>
+        </section>
+
+        <!-- Step 3: Attach the overlay to your button -->
+        <section>
+          <h3>Step 3: Attach the overlay to your button</h3>
+          <div class="code-overlay">
+            <pre><code>&lt;script&gt;
+document.getElementById("signUp").addEventListener("click", () =&gt; {
+  AuthOverlay.open();
+});
+&lt;/script&gt;</code></pre>
+          </div>
+        </section>
+
+        <!-- Step 4: Handle success and receive the token -->
+        <section>
+          <h3>Step 4: Handle success and receive the token</h3>
+          <div class="code-overlay">
+            <pre><code>&lt;script&gt;
+AuthOverlay.onSuccess((token) =&gt; {
+  console.log("✅ Token received:", token);
+});
+&lt;/script&gt;</code></pre>
+          </div>
+        </section>
 
         <div class="mt-4">
           <h3>Key Features</h3>

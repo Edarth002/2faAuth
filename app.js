@@ -112,10 +112,14 @@ async function handleVerify(event) {
     const data = await res.json();
     if (res.ok && data.token) {
       localStorage.setItem("authToken", data.token);
-      const email = localStorage.getItem("email");
-      logAction("VERIFY", `User: ${email || "UserID " + userId}`);
+
+      // 🔑 Send token back to the embedding host
+      window.parent.postMessage(
+        { type: "AUTH_SUCCESS", token: data.token },
+        "*"
+      );
+
       verifySuccess.textContent = "Verification successful!...";
-      setTimeout(() => (window.location.href = "logs.html"), 1500);
     } else {
       verifyError.textContent = data.message || "Verification failed.";
     }
